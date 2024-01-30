@@ -1,0 +1,8 @@
+{
+  "item.thirst.empty_kettle": "空水壶",
+  "item.thirst.kettle": "水壶",
+
+  "block.thirst.cistern": "水箱",
+
+  "item_group.thirst.thirst_tab": "口干舌燥"
+}
