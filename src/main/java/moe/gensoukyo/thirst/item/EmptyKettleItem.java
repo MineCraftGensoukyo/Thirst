@@ -1,13 +1,14 @@
 package moe.gensoukyo.thirst.item;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -42,6 +43,7 @@ public class EmptyKettleItem extends Item {
                     return InteractionResultHolder.pass(itemStack);
                 }
                 if (pLevel.getFluidState(pos).is(FluidTags.WATER)){
+                    pLevel.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                     pLevel.gameEvent(pPlayer, GameEvent.FLUID_PICKUP, pos);
                     return InteractionResultHolder.sidedSuccess(processKettleItem(itemStack, pPlayer), pLevel.isClientSide());
                 }

@@ -5,7 +5,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +14,7 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -24,7 +24,13 @@ import static moe.gensoukyo.thirst.register.ItemRegister.EMPTY_KETTLE;
 
 public class KettleItem extends Item {
     public KettleItem(Properties pProperties) {
-        super(pProperties.durability(4));
+        super(pProperties.defaultDurability(4));
+    }
+    private static final int DRINKING_DURATION = 32;
+
+    @Override
+    public boolean canAttackBlock(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer) {
+        return false;
     }
 
     @Override
@@ -67,7 +73,7 @@ public class KettleItem extends Item {
 
     @Override
     public int getUseDuration(@NotNull ItemStack pStack) {
-        return 32;
+        return DRINKING_DURATION;
     }
 
     @Override
@@ -77,7 +83,7 @@ public class KettleItem extends Item {
 
     protected ItemStack shrinkWater(ItemStack itemStack, Player player) {
         itemStack.setDamageValue(itemStack.getDamageValue() + 1);
-        if (itemStack.getDamageValue() == itemStack.getMaxDamage()) {
+        if (itemStack.getDamageValue() >= itemStack.getMaxDamage()) {
             itemStack.shrink(1);
             player.addItem(new ItemStack(EMPTY_KETTLE.get()));
         }
