@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": [{
+    "level=0": [{
       "model": "thirst:block/cistern"
+    }],
+    "level=1": [{
+      "model": "thirst:block/cistern1"
+    }],
+    "level=2": [{
+      "model": "thirst:block/cistern2"
+    }],
+    "level=3": [{
+      "model": "thairst:block/cistern3"
+    }],
+    "level=4": [{
+      "model": "thirst:block/cistern4"
     }]
   }
 }

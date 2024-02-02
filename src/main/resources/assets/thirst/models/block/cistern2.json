@@ -3,9 +3,9 @@
 	"render_type": "translucent",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "thirst:block/sink",
+		"0": "thirst:block/cistern_sink",
 		"1": "thirst:block/water",
-		"particle": "thirst:block/sink"
+		"particle": "thirst:block/cistern_sink"
 	},
 	"elements": [
 		{
