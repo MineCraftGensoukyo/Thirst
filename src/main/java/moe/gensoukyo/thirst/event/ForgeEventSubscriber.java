@@ -1,8 +1,6 @@
 package moe.gensoukyo.thirst.event;
 
 import moe.gensoukyo.thirst.block.CisternBlock;
-import moe.gensoukyo.thirst.utils.ClientHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
@@ -25,10 +23,6 @@ public class ForgeEventSubscriber {
         BlockState blockState = level.getBlockState(pos);
         ItemStack itemStack = event.getItemStack();
         if (itemStack.is(KETTLE.get()) && blockState.getBlock() instanceof CisternBlock) {
-            if (ClientHelper.clientMouseGrabbed(Minecraft.getInstance().mouseHandler, level)) {
-                event.setCanceled(true);
-                return;
-            }
             event.setCanceled(true);
             int currentCisternLevel = blockState.getValue(CisternBlock.WATER_LEVEL);
             int kettleLeavingDuration = itemStack.getDamageValue();
@@ -39,10 +33,6 @@ public class ForgeEventSubscriber {
                 event.getEntity().swing(InteractionHand.MAIN_HAND);
             }
         } else if (itemStack.is(EMPTY_KETTLE.get()) && blockState.getBlock() instanceof CisternBlock) {
-            if (ClientHelper.clientMouseGrabbed(Minecraft.getInstance().mouseHandler, level)) {
-                event.setCanceled(true);
-                return;
-            }
             event.setCanceled(true);
             int currentCisternLevel = blockState.getValue(CisternBlock.WATER_LEVEL);
             if (currentCisternLevel == 0) {
