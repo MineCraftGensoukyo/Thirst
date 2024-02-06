@@ -10,7 +10,7 @@
       "model": "thirst:block/cistern2"
     }],
     "level=3": [{
-      "model": "thairst:block/cistern3"
+      "model": "thirst:block/cistern3"
     }],
     "level=4": [{
       "model": "thirst:block/cistern4"
