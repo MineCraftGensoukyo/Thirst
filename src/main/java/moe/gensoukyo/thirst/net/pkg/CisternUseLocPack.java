@@ -1,6 +1,7 @@
 package moe.gensoukyo.thirst.net.pkg;
 
 import moe.gensoukyo.thirst.block.CisternBlock;
+import moe.gensoukyo.thirst.net.Channel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -62,6 +63,7 @@ public class CisternUseLocPack {
             player.addItem(givingKettle);
             stack.shrink(1);
             player.level().setBlockAndUpdate(pos, state.setValue(CisternBlock.WATER_LEVEL, targetWaterLevel));
+            Channel.sendToPlayer(new CisternUseResPack(targetWaterLevel), player);
         }
         if (stack.is(KETTLE.get())) {
             // 假想水壶的水量
@@ -71,15 +73,18 @@ public class CisternUseLocPack {
                 int realAdjustAmount = stack.getMaxDamage() - stack.getDamageValue();
                 player.level().setBlockAndUpdate(pos, state.setValue(CisternBlock.WATER_LEVEL, cisternLevel + realAdjustAmount));
                 player.setItemInHand(hand, new ItemStack(EMPTY_KETTLE.get()));
+                Channel.sendToPlayer(new CisternUseResPack(cisternLevel + realAdjustAmount), player);
             } else if (kettleWillBeWaterLevel > stack.getMaxDamage()) {
                 // 如果假想的结果是超出水壶的最大水量，那么水壶装不下
                 int realAdjustAmount = stack.getDamageValue();
                 player.level().setBlockAndUpdate(pos, state.setValue(CisternBlock.WATER_LEVEL, cisternLevel - realAdjustAmount));
                 stack.setDamageValue(0);
+                Channel.sendToPlayer(new CisternUseResPack(cisternLevel - realAdjustAmount), player);
             } else {
                 // 正常情况
                 player.level().setBlockAndUpdate(pos, state.setValue(CisternBlock.WATER_LEVEL, targetWaterLevel));
                 stack.setDamageValue(stack.getMaxDamage() - kettleWillBeWaterLevel);
+                Channel.sendToPlayer(new CisternUseResPack(targetWaterLevel), player);
             }
         }
     }

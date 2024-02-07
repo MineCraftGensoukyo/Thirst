@@ -1,6 +1,7 @@
 package moe.gensoukyo.thirst.net;
 
 import moe.gensoukyo.thirst.net.pkg.CisternUseLocPack;
+import moe.gensoukyo.thirst.net.pkg.CisternUseResPack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkRegistry;
@@ -33,6 +34,12 @@ public class Channel {
                 .encoder(CisternUseLocPack::toBytes)
                 .decoder(CisternUseLocPack::new)
                 .consumerMainThread(CisternUseLocPack::handle)
+                .add();
+
+        net.messageBuilder(CisternUseResPack.class, nextId())
+                .encoder(CisternUseResPack::toBytes)
+                .decoder(CisternUseResPack::new)
+                .consumerMainThread(CisternUseResPack::handle)
                 .add();
     }
 
