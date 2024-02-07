@@ -65,6 +65,7 @@ public class KettleItem extends Item {
                     // 0~0.125是第一个水位，0.125~0.375是第二个水位，0.375~0.625是第三个水位，0.625~0.875是第四个水位，0.875~1是第五个水位
                     int targetWaterLevel = (int)((hitVec.y + 0.125) * 4);
                     Channel.sendToServer(new CisternUseLocPack(pos, targetWaterLevel, pUsedHand));
+                    return InteractionResultHolder.success(itemStack);
                 }
                 else {
                     return ItemUtils.startUsingInstantly(pLevel, pPlayer, pUsedHand);

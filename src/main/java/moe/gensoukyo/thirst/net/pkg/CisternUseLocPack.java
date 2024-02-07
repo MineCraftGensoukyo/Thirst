@@ -57,10 +57,10 @@ public class CisternUseLocPack {
         int adjustAmount = targetWaterLevel - cisternLevel;
         if (stack.is(EMPTY_KETTLE.get()) && adjustAmount < 0) {
             // 空水壶只能取水
-            stack.shrink(1);
             ItemStack givingKettle = new ItemStack(KETTLE.get());
             givingKettle.setDamageValue(givingKettle.getMaxDamage() + adjustAmount);
             player.addItem(givingKettle);
+            stack.shrink(1);
             player.level().setBlockAndUpdate(pos, state.setValue(CisternBlock.WATER_LEVEL, targetWaterLevel));
         }
         if (stack.is(KETTLE.get())) {
@@ -70,8 +70,7 @@ public class CisternUseLocPack {
                 // 如果假想的结果是负数，那么水壶不够水（零也可以在这里处理）
                 int realAdjustAmount = stack.getMaxDamage() - stack.getDamageValue();
                 player.level().setBlockAndUpdate(pos, state.setValue(CisternBlock.WATER_LEVEL, cisternLevel + realAdjustAmount));
-                stack.shrink(1);
-                player.addItem(new ItemStack(EMPTY_KETTLE.get()));
+                player.setItemInHand(hand, new ItemStack(EMPTY_KETTLE.get()));
             } else if (kettleWillBeWaterLevel > stack.getMaxDamage()) {
                 // 如果假想的结果是超出水壶的最大水量，那么水壶装不下
                 int realAdjustAmount = stack.getDamageValue();
